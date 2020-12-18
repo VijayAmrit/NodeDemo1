@@ -23,8 +23,6 @@ app.post('/ekpo',jsonParser, function(req, res){
     res.type("json");
     res.send(JSON.stringify(req.body));
     res.end();
-    // res.type('json');
-    // res.send(JSON.stringify(poItem));
 });
 app.listen(4040);
 // http
