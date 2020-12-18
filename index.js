@@ -19,31 +19,11 @@ app.get('/ekpo', function(req, res){
     res.send(JSON.stringify(poItem));
 });
 app.post('/ekpo',jsonParser, function(req, res){
-    console.log(req.body);
+    var obj = req.body;
+    obj.CreatedBy = "Vijay Singh";
     res.type("json");
-    res.send(JSON.stringify(req.body));
+    res.send(JSON.stringify(obj));
     res.end();
 });
 app.listen(4040);
-// http
-//   .createServer(function (req, res) {
-//     res.setHeader("Content-type","JSON");
-//     if (req.method == "GET") {
-//       console.log(req);
-//       switch (req.url) {
-//         case "/ekko":
-//           res.write(JSON.stringify(poHeader));
-//           res.end();
-//           break;
-//         case "/ekpo":
-//           res.write(JSON.stringify(poItem));
-//           res.end();
-//           break;
-//         default:
-//           break;
-//       }
 
-//     //   res.end();
-//     }
-//   })
-//   .listen(4040);
