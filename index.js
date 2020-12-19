@@ -1,57 +1,78 @@
-let poHeader = { ebeln: 1, werks: "DE01", burks: 1000 };
-let poItem = { ebeln: 1, ebelp: "00010", matnr: "MAT1" };
+// let poHeader = { ebeln: 1, werks: "DE01", burks: 1000 };
+// let poItem = { ebeln: 1, ebelp: "00010", matnr: "MAT1" };
 
-var fs = require('fs');
+var fs = require("fs");
+const dotenv = require('dotenv');
+dotenv.config();
 
-// console.log(myPo);
 let http = require("http");
-const express = require('express');
+const express = require("express");
 const app = express();
 var bodyParser = require("body-parser");
 var jsonParser = bodyParser.json();
-app.get('/', function(req, res){
-    // res.setHeader("Content-type","JSON");
-    res.send('Hello World');
-});
-app.get('/ekko', function(req, res){
-    res.type('json');
-    res.send(JSON.stringify(poHeader));
-});
-app.get('/ekpo', function(req, res){    
-    res.type('json');
-    //Read a file
-    fs.readFile("C:/Users/singhvij/Desktop/workspace/node/demo1/mynewfile.json", function(err, data) {
-        console.log(data);
+app.get("/", function (req, res) {
+  res.type("json");
+  switch (req.query.data) {
+    case "ekko":
+      fs.readFile("./ekko.json", function (err, data) {
         res.send(JSON.stringify(JSON.parse(data)));
         return res.end();
       });
-     ////end of read a file 
-    
+      break;
+    case "ekpo":
+      fs.readFile("../demo1/ekpo.json", function (err, data) {    
+        res.send(JSON.stringify(JSON.parse(data)));
+        return res.end();
+      });
+      break;
+    default:
+      break;
+  }
 });
-app.post('/ekpo',jsonParser, function(req, res){
-    var obj = req.body;
-    obj.CreatedBy = "Vijay Singh";
-    //files
-    fs.readFile("C:/Users/singhvij/Desktop/workspace/node/demo1/mynewfile.json", function(err, data) {
+
+
+app.post("/", jsonParser, function (req, res) {
+  res.type("json");
+  var obj = req.body;
+  switch (req.query.data) { 
+    case "ekko":
+      fs.readFile("../demo1/ekko.json", function (err, data) {
         // console.log(data);
         var fileArray = JSON.parse(data);
         fileArray[fileArray.length] = req.body;
         res.send(JSON.stringify(fileArray));
         //over write existing file
-        fs.writeFile("C:/Users/singhvij/Desktop/workspace/node/demo1/mynewfile.json", JSON.stringify(fileArray), function (err) {
+        fs.writeFile(
+          "../demo1/ekko.json",
+          JSON.stringify(fileArray),
+          function (err) {
             if (err) throw err;
-            console.log('Replaced!');
-          });
+            console.log("Replaced!");
+          }
+        );
         return res.end();
       });
-    // fs.appendFile('./workspace/node/demo1/mynewfile.json', ","+JSON.stringify(obj), function (err) {
-    //     if (err) throw err;
-    //     console.log('Saved!');
-    //   });
-    // ///
-    // res.type("json");
-    // res.send(JSON.stringify(obj));
-    // res.end();
+      break;
+    case "ekpo":
+      fs.readFile("../demo1/ekpo.json", function (err, data) {
+        // console.log(data);
+        var fileArray = JSON.parse(data);
+        fileArray[fileArray.length] = req.body;
+        res.send(JSON.stringify(fileArray));
+        //over write existing file
+        fs.writeFile(
+          "../demo1/ekpo.json",
+          JSON.stringify(fileArray),
+          function (err) {
+            if (err) throw err;
+            console.log("Replaced!");
+          }
+        );
+        return res.end();
+      });
+      break;
+    default:
+      break;
+  }
 });
-app.listen(4040);
-
+app.listen(process.env.PORT);
