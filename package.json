@@ -1,17 +1,28 @@
 {
   "name": "demo1",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
+    "prerestart-me": "",
+    "start-me": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Vijay Singh",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "files": "^1.1.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VijayAmrit/NodeDemo1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/VijayAmrit/NodeDemo1/issues"
+  },
+  "homepage": "https://github.com/VijayAmrit/NodeDemo1#readme",
+  "description": ""
 }
